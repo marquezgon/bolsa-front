@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ListaOfertas from '../components/lista_ofertas';
 
 class CandidatoIndex extends Component {
   render() {
@@ -30,7 +31,7 @@ class CandidatoIndex extends Component {
                   <div className="form-group">
                     <button className="btn btn-t-primary btn-lg btn-theme btn-pill btn-block">Find Jobs</button>
                   </div>
-                  <div class="text-center">
+                  <div className="text-center">
                     &nbsp;
                   </div>
                 </form>
@@ -41,20 +42,12 @@ class CandidatoIndex extends Component {
         <div className="body-content clearfix" >
           <div className="block-section bg-color1">
             <div className="container">
-              <div className="row text-center">
-                <div className="col-md-4">
-                  <h3 className="font-2x ">203,285</h3>
-                  <h4 className="color-text">Registered Member</h4>
-                </div>
-                <div className="col-md-4">
-                  <h3 className="font-2x ">3,603,945</h3>
-                  <h4 className="color-text">Joblist Posted</h4>
-                </div>
-                <div className="col-md-4">
-                  <h3 className="font-2x ">53,945</h3>
-                  <h4 className="color-text">Awesome Company</h4>
+              <div className="row hidden-xs">
+                <div className="col-sm-12">
+                  <h4><strong className="color-black">Últimas Oferta de Trabajo</strong></h4>
                 </div>
               </div>
+              <ListaOfertas />
             </div>
           </div>
         </div>

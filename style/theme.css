@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
-/* Theme Name: Jobplanet - Responsive Job Board HTML Template 
+/* Theme Name: Jobplanet - Responsive Job Board HTML Template
  Author: yobithemes
  Author URI: http://yobithemes.com
 
@@ -1026,7 +1026,7 @@ a:focus {
   position: relative;
 }
 .block-section {
-  padding: 60px 0;
+  padding: 35px 0 60px 0px;
 }
 .block-section-sm {
   padding: 40px 0;
@@ -1347,7 +1347,7 @@ a:focus {
 .main-header .logo {
   max-width: 100%;
   position: relative;
-  margin: 80px 0;
+  margin: 46px 0;
 }
 @media (max-width: 992px) {
   .main-header .logo {
@@ -1382,7 +1382,7 @@ a:focus {
   background-size: cover;
   overflow: hidden;
   position: relative;
-  min-height: 540px;
+  min-height: 500px;
 }
 .main-header .hero-header:before {
   content: "";
@@ -1881,7 +1881,7 @@ a:focus {
   position: absolute;
 }
 @media (max-width: 768px) {
-  
+
 }
 .resume-block:before {
   content: "";
@@ -2095,4 +2095,13 @@ a:focus {
   position: fixed !important;
   top: 60px;
   width: 263px;
+}
+
+/* Custom Styling */
+.box-list > .item:hover {
+  background-color: #F4F4F4;
+  cursor: pointer;
+}
+#navbar-header-ul > li {
+  cursor: pointer;
 }
