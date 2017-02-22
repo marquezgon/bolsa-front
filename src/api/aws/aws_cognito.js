@@ -286,31 +286,31 @@ export function signUpUser({email, password}){
 // 	return p
 // }
 //
-// // reset the verification PIN for verifying a new user
-// export function resetVerificationPIN(email){
-// 	const p = new Promise((res, rej)=>{
-// 		// create the `userData` object for instantiating a new `cognitoUser` object
-// 		const userData = {
-// 			Username: email,
-// 			Pool: userPool
-// 		}
-// 		// create the `cognitoUser` object
-// 		const cognitoUser = new CognitoUser(userData)
-// 		// and call the `resendConfirmationCode()` of `cognitoUser`
-// 		cognitoUser.resendConfirmationCode(function(err, result) {
-// 					// reject promise if confirmation code failed
-// 	        if (err) {
-// 	          console.log(err);
-// 		        rej(err);
-// 						return;
-// 	        }
-// 					// resolve if successfull
-// 	        res()
-// 	    })
-// 	})
-// 	return p
-// }
-//
+// reset the verification PIN for verifying a new user
+export function resetVerificationPIN(email){
+	const p = new Promise((res, rej)=>{
+		// create the `userData` object for instantiating a new `cognitoUser` object
+		const userData = {
+			Username: email,
+			Pool: userPool
+		}
+		// create the `cognitoUser` object
+		const cognitoUser = new CognitoUser(userData)
+		// and call the `resendConfirmationCode()` of `cognitoUser`
+		cognitoUser.resendConfirmationCode(function(err, result) {
+					// reject promise if confirmation code failed
+	        if (err) {
+	          console.log(err);
+		        rej(err);
+						return;
+	        }
+					// resolve if successfull
+	        res(result)
+	    })
+	})
+	return p
+}
+
 // // for automatic signin of a user (so they don't have to login each time)
 // export function retrieveUserFromLocalStorage(){
 // 	const p = new Promise((res, rej)=>{
