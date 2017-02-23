@@ -148,40 +148,39 @@ export function signUpUser({email, password}){
 // 	return p
 // }
 //
-// // when users sign up, they need to verify their account
-// // verification requires their unique identifier (in this case, their email) and the verification PIN
-// export function verifyUserAccount({email, pin}){
-// 	const p = new Promise((res, rej)=>{
-// 		// we create an object to hold our userData that will be used to create our `cognitoUser` object
-// 		// we cannot just use `userPool` to instantiate a `cognitoUser` object, as no user has been signed in yet
-// 		const userData = {
-// 			Username: email,
-// 			Pool: userPool
-// 		}
-// 		// create the `cognitoUser` object
-// 		const cognitoUser = new CognitoUser(userData)
-// 		// call the `confirmRegistration()` function of `cognitoUser` and pass in the verification PIN
-// 		cognitoUser.confirmRegistration(pin, true, function(err, result) {
-// 	        if (err) {
-// 	            console.log(err);
-// 		        rej(err)
-// 	            return;
-// 	        }
-// 	        // if successful, we signout to refresh the cognitoUser (they will have to login again)
-// 					// actually this is not mandatory either, but during testing I discovered that login does not immediately work after verification due to un-refreshed authentication
-// 					// logging in again will get those authentication tokens
-// 	        if(result == "SUCCESS"){
-// 	        	console.log("Successfully verified account!")
-// 	        	cognitoUser.signOut()
-// 	        	res()
-// 	        }else{
-// 						// if otherwise failure, we reject the promise
-// 	        	rej("Could not verify account")
-// 	        }
-// 	    })
-// 	})
-// 	return p
-// }
+// when users sign up, they need to verify their account
+// verification requires their unique identifier (in this case, their email) and the verification PIN
+export function verifyUserAccount({email, pin}){
+	const p = new Promise((res, rej)=>{
+		// we create an object to hold our userData that will be used to create our `cognitoUser` object
+		// we cannot just use `userPool` to instantiate a `cognitoUser` object, as no user has been signed in yet
+		const userData = {
+			Username: email,
+			Pool: userPool
+		}
+		// create the `cognitoUser` object
+		const cognitoUser = new CognitoUser(userData)
+		// call the `confirmRegistration()` function of `cognitoUser` and pass in the verification PIN
+		cognitoUser.confirmRegistration(pin, true, function(err, result) {
+	        if (err) {
+	            console.log(err);
+		        rej(err)
+	            return;
+	        }
+	        // if successful, we signout to refresh the cognitoUser (they will have to login again)
+					// actually this is not mandatory either, but during testing I discovered that login does not immediately work after verification due to un-refreshed authentication
+					// logging in again will get those authentication tokens
+	        if(result == "SUCCESS"){
+	        	console.log("Successfully verified account!")
+	        	res()
+	        }else{
+						// if otherwise failure, we reject the promise
+	        	rej("Could not verify account")
+	        }
+	    })
+	})
+	return p
+}
 //
 // // if we want to update the info of our user, we must pass in their unique identifier (email) and an object representing the user info
 // export function updateUserInfo(email, editedInfo){

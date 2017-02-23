@@ -73,6 +73,30 @@
   opacity: .88;
 }
 
+.pin-sent:hover {
+  color: #3CB730;
+  text-decoration: none;
+}
+
 .text-success {
   color: #3CB730;
+}
+
+.box-list > .item:hover {
+  background-color: #edf4ff;
+}
+
+.verified-div {
+  position: relative;
+  color: #fff;
+  top: 110px;
+  text-align: center;
+}
+
+.verified-div > h2 {
+  color: #fff;
+}
+
+.verified-div > h2 > i {
+  font-size: 100px;
 }
