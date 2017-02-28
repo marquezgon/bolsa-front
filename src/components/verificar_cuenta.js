@@ -131,5 +131,6 @@ export default connect(state => {
     email
   }
 }, null)(reduxForm({
-  form: 'Verificar'
+  form: 'Verificar',
+  validate
 })(Verificar));

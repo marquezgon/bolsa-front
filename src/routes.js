@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import CandidatoIndex from './containers/candidato_index';
-import Login from './components/login';
+import Login from './containers/login';
 import Registro from './components/registro';
 import Verificar from './components/verificar_cuenta';
 

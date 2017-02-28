@@ -34,119 +34,111 @@ export function signUpUser({email, password}){
 	return p
 }
 
-// // sign in user with 2 parameters (email and password)
-// export function signInUser({email, password}){
-// 	// use a promise to handle async
-// 	const p = new Promise((res, rej)=>{
-// 		// create an `AuthenticationDetails` Cognito object filled with the email+password
-// 		const authenticationDetails = new AuthenticationDetails({
-// 			Username: email,
-// 			Password: password
-// 		})
-// 		// create a `CognitoUser` object filled with a username and identity pool
-// 		const userData = {
-// 			Username: email,
-// 			Pool: userPool
-// 		}
-// 		const cognitoUser = new CognitoUser(userData)
-// 		// call the `authenticateUser` method from Cognito, passing in the `CognitoUser` object and the `AuthenticationDetails` object
-// 		authenticateUser(cognitoUser, authenticationDetails)
-// 			// check if there is an S3 album for the user, and if not, then create one
-// 			.then(()=>{
-// 				return createUserS3Album(email)
-// 			})
-// 			.then(()=>{
-// 				// if successfully authenticated, build the user object to return to the Redux state to use
-// 				return buildUserObject(cognitoUser)
-// 			})
-// 			.then((userProfileObject)=>{
-// 				// if successfully built the object, return it back to your React app
-// 				res(userProfileObject)
-// 			})
-// 			.catch((err)=>{
-// 				// if failure, reject the promise
-// 				rej(err)
-// 			})
-// 	})
-// 	return p
-// }
-//
-// // authenticate a user with its `CognitoUser` and `AuthenticationDetails` AWS objects
-// function authenticateUser(cognitoUser, authenticationDetails){
-// 	// use a promise to handle async
-// 	const p = new Promise((res, rej)=>{
-// 		// call the `authenticateUser` method of the `CognitoUser` object, passing in the `AuthenticationDetails`
-// 		cognitoUser.authenticateUser(authenticationDetails, {
-// 					// handle if successfull
-// 	        onSuccess: function (result) {
-// 							// save the jwtToken on localStorage for access elsewhere in app
-// 	            localStorage.setItem('user_token', result.accessToken.jwtToken);
-// 	            console.log("======== VIEW THE REFRESH TOKEN =========")
-// 	            console.log(localStorage.getItem('user_token'))
-// 	            console.log("======== VIEW THE AUTHENICATION RESULT =========")
-// 	            console.log(result)
-//
-// 							// To
-// 			    		// Edge case, AWS Cognito does not allow for the Logins attr to be dynamically generated. So we must create the loginsObj beforehand
-// 	            const loginsObj = {
-// 	                // For the object's key name, use the USERPOOL_ID taken from our shared aws_profile js file
-// 									// For the object's value, use the jwtToken received in the success callback
-// 	                [USERPOOL_ID]: result.getIdToken().getJwtToken()
-// 	            }
-// 							// in order to use other AWS services (such as S3), we need the correct AWS credentials
-// 							// we set these credentials by passing in a `CognitoIdentityCredentials` object that has our identity pool id and logins object
-// 							// we are logging into an AWS federated identify pool
-// 							AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-// 	                IdentityPoolId : IDENTITY_POOL_ID, // your identity pool id here
-// 	                Logins : loginsObj
-// 	            })
-// 							// then we refresh our credentials to use the latest one that we set
-// 	            AWS.config.credentials.refresh(function(){
-// 	            	console.log(AWS.config.credentials)
-// 	            })
-// 							// resolve the promise to move on to next step after authentication
-// 	            res()
-// 	        },
-// 					// if there was a failure, we reject the promise
-// 	        onFailure: function(err) {
-// 	            console.log(err)
-// 	            rej(err)
-// 	        },
-// 	    })
-// 	})
-// 	return p
-// }
+// sign in user with 2 parameters (email and password)
+export function signInUser({email, password}){
+	// use a promise to handle async
+	const p = new Promise((res, rej)=>{
+		// create an `AuthenticationDetails` Cognito object filled with the email+password
+		const authenticationDetails = new AuthenticationDetails({
+			Username: email,
+			Password: password
+		})
+		// create a `CognitoUser` object filled with a username and identity pool
+		const userData = {
+			Username: email,
+			Pool: userPool
+		}
+		const cognitoUser = new CognitoUser(userData)
+		// call the `authenticateUser` method from Cognito, passing in the `CognitoUser` object and the `AuthenticationDetails` object
+		authenticateUser(cognitoUser, authenticationDetails)
+			.then(()=>{
+				// if successfully authenticated, build the user object to return to the Redux state to use
+				return buildUserObject(cognitoUser)
+			})
+			.then((userProfileObject)=>{
+				// if successfully built the object, return it back to your React app
+				res(userProfileObject)
+			})
+			.catch((err)=>{
+				// if failure, reject the promise
+				rej(err)
+			})
+	})
+	return p
+}
+
+// authenticate a user with its `CognitoUser` and `AuthenticationDetails` AWS objects
+function authenticateUser(cognitoUser, authenticationDetails){
+	// use a promise to handle async
+	const p = new Promise((res, rej)=>{
+		// call the `authenticateUser` method of the `CognitoUser` object, passing in the `AuthenticationDetails`
+		cognitoUser.authenticateUser(authenticationDetails, {
+					// handle if successfull
+	        onSuccess: function (result) {
+							// save the jwtToken on localStorage for access elsewhere in app
+	            localStorage.setItem('bolsa_user_token', result.accessToken.jwtToken);
+	            // console.log("======== VIEW THE REFRESH TOKEN =========")
+	            // console.log(localStorage.getItem('bolsa_user_token'))
+	            // console.log("======== VIEW THE AUTHENICATION RESULT =========")
+	            // console.log(result)
+	            const loginsObj = {
+	                // For the object's key name, use the USERPOOL_ID taken from our shared aws_profile js file
+									// For the object's value, use the jwtToken received in the success callback
+	                [USERPOOL_ID]: result.getIdToken().getJwtToken()
+	            }
+							// in order to use other AWS services (such as S3), we need the correct AWS credentials
+							// we set these credentials by passing in a `CognitoIdentityCredentials` object that has our identity pool id and logins object
+							// we are logging into an AWS federated identify pool
+							AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	                IdentityPoolId : IDENTITY_POOL_ID, // your identity pool id here
+	            })
+							// then we refresh our credentials to use the latest one that we set
+	            AWS.config.credentials.refresh(function(){
+	            	//console.log(AWS.config.credentials)
+	            })
+							// resolve the promise to move on to next step after authentication
+	            res()
+	        },
+					// if there was a failure, we reject the promise
+	        onFailure: function(err) {
+	            console.log(err)
+	            rej(err)
+	        },
+	    })
+	})
+	return p
+}
 //
 // // buildUserObject() gets the user attributes from Cognito and creates an object to represent our user
-// // this will be used by the Redux state so that we can reference the user
-// function buildUserObject(cognitoUser){
-// 	const p = new Promise((res, rej)=>{
-// 		// call the cognito function `getUserAttributes()`
-// 		cognitoUser.getUserAttributes(function(err, result) {
-// 	        if (err) {
-// 	            console.log(err);
-// 	    				rej(err)
-// 							return
-// 	        }
-// 					// instantiate an empty object
-// 	        let userProfileObject = {}
-// 					// loop through the userAttributes and append to `userProfileObject` as attributes
-// 					for (let i = 0; i < result.length; i++) {
-// 						// custom Cognito attributes will be prefixed with `custom:`, so we must strip away that from the string
-// 		        if(result[i].getName().indexOf('custom:') >= 0){
-// 		    		let name = result[i].getName().slice(7, result[i].getName().length)
-// 		    		userProfileObject[name] = result[i].getValue()
-// 		    	}else{
-// 						// normal Cognito attributes will not be prefixed with `custom:` so we can use use the string immediately
-// 		    		userProfileObject[result[i].getName()] = result[i].getValue()
-// 		    	}
-// 		    }
-// 	      // and now our user profile object is complete and we resolve the promise to move on to the next step
-// 	      res(userProfileObject)
-// 	    })
-// 	})
-// 	return p
-// }
+// this will be used by the Redux state so that we can reference the user
+function buildUserObject(cognitoUser){
+	const p = new Promise((res, rej)=>{
+		// call the cognito function `getUserAttributes()`
+		cognitoUser.getUserAttributes(function(err, result) {
+	        if (err) {
+	            console.log(err);
+	    				rej(err)
+							return
+	        }
+					// instantiate an empty object
+	        let userProfileObject = {}
+					// loop through the userAttributes and append to `userProfileObject` as attributes
+					for (let i = 0; i < result.length; i++) {
+						// custom Cognito attributes will be prefixed with `custom:`, so we must strip away that from the string
+		        if(result[i].getName().indexOf('custom:') >= 0){
+		    		let name = result[i].getName().slice(7, result[i].getName().length)
+		    		userProfileObject[name] = result[i].getValue()
+		    	}else{
+						// normal Cognito attributes will not be prefixed with `custom:` so we can use use the string immediately
+		    		userProfileObject[result[i].getName()] = result[i].getValue()
+		    	}
+		    }
+	      // and now our user profile object is complete and we resolve the promise to move on to the next step
+	      res(userProfileObject)
+	    })
+	})
+	return p
+}
 //
 // when users sign up, they need to verify their account
 // verification requires their unique identifier (in this case, their email) and the verification PIN
