@@ -5,7 +5,12 @@ class FacebookButton extends Component {
   login() {
     window.FB.login(function (response) {
       registerFacebookLoginWithCognito(response)
-    })
+        .then(() => {
+          FB.api('/me', {fields: ['first_name', 'last_name', 'email']}, function(userInfo) {
+            console.log(userInfo);
+          });
+        })
+    }, {scope: 'public_profile,email,user_friends'})
   }
 
   render() {

@@ -131,6 +131,7 @@ function buildUserObject(cognitoUser){
 		    	}
 		    }
 	      // and now our user profile object is complete and we resolve the promise to move on to the next step
+				console.log(userProfileObject);
 	      res(userProfileObject)
 	    })
 	})
@@ -358,11 +359,9 @@ export function resetVerificationPIN(email){
 // login to cognito using Facebook instead of an AWS email/password login flow
 // requires first logging in with Facebook and passing in the result of the login function to `registerFacebookLoginWithCognito()`
 export function registerFacebookLoginWithCognito(response){
-	console.log(response)
+		const p = new Promise((res, rej)=>{
 	// Check if the user logged in successfully.
 	  if (response.authResponse) {
-
-			localStorage.setItem('bolsa_user_token', response.authResponse.accessToken);
 	    console.log('You are now logged in.');
 
 	    // Add the Facebook access token to the Cognito credentials login map
@@ -382,7 +381,13 @@ export function registerFacebookLoginWithCognito(response){
 		    console.log(AWS.config.credentials)
 			});
 
+			res();
+
 	  } else {
 	    console.log('There was a problem logging you in.');
+			rej('There was a problem logging you in.');
 	  }
+	});
+
+	return p;
 }
