@@ -77,10 +77,6 @@ function authenticateUser(cognitoUser, authenticationDetails){
 	        onSuccess: function (result) {
 							// save the jwtToken on localStorage for access elsewhere in app
 	            localStorage.setItem('bolsa_user_token', result.accessToken.jwtToken);
-	            // console.log("======== VIEW THE REFRESH TOKEN =========")
-	            // console.log(localStorage.getItem('bolsa_user_token'))
-	            // console.log("======== VIEW THE AUTHENICATION RESULT =========")
-	            // console.log(result)
 	            const loginsObj = {
 	                // For the object's key name, use the USERPOOL_ID taken from our shared aws_profile js file
 									// For the object's value, use the jwtToken received in the success callback
@@ -91,10 +87,11 @@ function authenticateUser(cognitoUser, authenticationDetails){
 							// we are logging into an AWS federated identify pool
 							AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 	                IdentityPoolId : IDENTITY_POOL_ID, // your identity pool id here
+									Logins : loginsObj
 	            })
 							// then we refresh our credentials to use the latest one that we set
 	            AWS.config.credentials.refresh(function(){
-	            	//console.log(AWS.config.credentials)
+	            	console.log(AWS.config.credentials)
 	            })
 							// resolve the promise to move on to next step after authentication
 	            res()
@@ -358,34 +355,34 @@ export function resetVerificationPIN(email){
 // 	return p
 // }
 //
-// // login to cognito using Facebook instead of an AWS email/password login flow
-// // requires first logging in with Facebook and passing in the result of the login function to `registerFacebookLoginWithCognito()`
-// export function registerFacebookLoginWithCognito(response){
-// 	console.log("registerFacebookLoginWithCognito")
-// 	console.log(response)
-// 	// Check if the user logged in successfully.
-// 	  if (response.authResponse) {
-//
-// 	    console.log('You are now logged in.');
-//
-// 	    // Add the Facebook access token to the Cognito credentials login map
-// 			// we pass in the accessToken from the fb response into our `CognitoIdentityCredentials`
-// 	    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-// 				// we are logging into an AWS federated identify pool, for facebook login
-// 	      IdentityPoolId: IDENTITY_POOL_ID,
-// 	      Logins: {
-// 	         'graph.facebook.com': response.authResponse.accessToken
-// 	      }
-// 	    })
-//
-// 	    // AWS Cognito Sync to sync Facebook
-// 			// aka refreshing the credentials to use thorughout our app
-// 	    AWS.config.credentials.get(function() {
-// 		    const client = new AWS.CognitoSyncManager();
-// 		    console.log(AWS.config.credentials)
-// 		});
-//
-// 	  } else {
-// 	    console.log('There was a problem logging you in.');
-// 	  }
-//}
+// login to cognito using Facebook instead of an AWS email/password login flow
+// requires first logging in with Facebook and passing in the result of the login function to `registerFacebookLoginWithCognito()`
+export function registerFacebookLoginWithCognito(response){
+	console.log(response)
+	// Check if the user logged in successfully.
+	  if (response.authResponse) {
+
+			localStorage.setItem('bolsa_user_token', response.authResponse.accessToken);
+	    console.log('You are now logged in.');
+
+	    // Add the Facebook access token to the Cognito credentials login map
+			// we pass in the accessToken from the fb response into our `CognitoIdentityCredentials`
+	    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+				// we are logging into an AWS federated identify pool, for facebook login
+	      IdentityPoolId: IDENTITY_POOL_ID,
+	      Logins: {
+	         'graph.facebook.com': response.authResponse.accessToken
+	      }
+	    })
+
+	    // AWS Cognito Sync to sync Facebook
+			// aka refreshing the credentials to use thorughout our app
+	    AWS.config.credentials.get(function() {
+		    const client = new AWS.CognitoSyncManager();
+		    console.log(AWS.config.credentials)
+			});
+
+	  } else {
+	    console.log('There was a problem logging you in.');
+	  }
+}

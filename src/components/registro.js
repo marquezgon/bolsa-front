@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { signUpUser } from '../api/aws/aws_cognito';
 import LoadingSpinner from './loading_spinner';
+import FacebookButton from '../containers/facebook_button';
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -52,13 +53,13 @@ class Registro extends Component {
                 <div className="panel-body">
                   <div className="row">
                     <div className="col-md-12">
-                      <p><a href="#" className="btn btn-primary btn-theme btn-block"><i className="fa fa-facebook pull-left bordered-right"></i> Register with Facebook</a></p>
+                      <p><FacebookButton text="Regístrate con Facebook" /></p>
                       <p><a href="#" className="btn btn-danger btn-theme btn-block"><i className="fa fa-google-plus pull-left bordered-right"></i> Register with Google</a></p>
                       <div className="white-space-10"></div>
                       <p className="text-center"><span className="span-line">Ó</span></p>
                       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                         <Field name="email" component={renderInput} type="email" label="Email" placeholder="Ingresa tu email" />
-                        <Field name="password" component={renderInput} type="password" label="Contraseña" placeholder="Ingresa tu contraseña" />
+                        <Field name="password" component={renderInput} type="password" label="Contraseña" placeholder="Ingresa una contraseña" />
                         <div className="white-space-10"></div>
                         <div className="form-group no-margin">
                           <button type="submit" className="btn btn-theme btn-lg btn-t-primary btn-block">Registrar</button>

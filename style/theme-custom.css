@@ -68,6 +68,10 @@
   text-decoration: underline;
 }
 
+.login-btn {
+  cursor: pointer;
+}
+
 .resend-code:hover {
   color: #3d454c;
   opacity: .88;

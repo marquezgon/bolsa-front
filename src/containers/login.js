@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { signInUser } from '../api/aws/aws_cognito';
 import { Field, reduxForm } from 'redux-form';
-import { setUser } from '../actions/index'
+import { setUser } from '../actions/index';
+import FacebookButton from './facebook_button';
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -33,8 +34,8 @@ class Login extends Component {
   }
 
   render() {
-    const { handleSubmit, user } = this.props;
-    console.log(user);
+    const { handleSubmit } = this.props;
+
     return (
       <div className="body-content clearfix">
         <div className="block-section bg-color4">
@@ -43,8 +44,8 @@ class Login extends Component {
               <div className="panel-body">
                 <div className="row">
                   <div className="col-md-12">
-                    <p><a href="#" className="btn btn-primary btn-theme btn-block"><i className="fa fa-facebook pull-left bordered-right"></i> Login with Facebook</a></p>
-                    <p><a href="#" className="btn btn-danger btn-theme btn-block"><i className="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
+                    <p><FacebookButton text="Inicia Sesión con Facebook" /></p>
+                    <p><a className="btn btn-danger btn-theme btn-block login-btn"><i className="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
                     <div className="white-space-10"></div>
                     <p className="text-center"><span className="span-line">Ó</span></p>
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -62,7 +63,7 @@ class Login extends Component {
                             </div>
                           </div>
                           <div className="col-xs-6 text-right">
-                            <p className="help-block"><a onClick={() => console.log(user)} data-toggle="modal">¿Olvidaste tu contraseña?</a></p>
+                            <p className="help-block"><a data-toggle="modal">¿Olvidaste tu contraseña?</a></p>
                           </div>
                         </div>
                       </div>
@@ -75,7 +76,7 @@ class Login extends Component {
               </div>
             </div>
             <div className="white-space-20"></div>
-            <div className="text-center color-white">¿No eres miembro? &nbsp; <Link to="registro" className="link-white"><strong>Crea una cuenta</strong></Link></div>
+            <div className="text-center color-white">¿No eres miembro? &nbsp; <Link to="registro" className="link-white"><strong>Crea tu cuenta</strong></Link></div>
           </div>
         </div>
       </div>
@@ -96,11 +97,7 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  return { user: state.user };
-}
-
-export default connect(mapStateToProps, { setUser })(reduxForm({
+export default connect(null, { setUser })(reduxForm({
     form: 'Login',
     validate
 })(Login));
