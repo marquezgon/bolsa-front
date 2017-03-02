@@ -391,3 +391,29 @@ export function registerFacebookLoginWithCognito(response){
 
 	return p;
 }
+
+export function registerGoogleLoginWithCognito(authResult) {
+  const p = new Promise((res, rej) => {
+    const result = authResult.getAuthResponse();
+    if (result) {
+
+       // Add the Google access token to the Cognito credentials login map.
+       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: IDENTITY_POOL_ID,
+          Logins: {
+             'accounts.google.com': result["id_token"]
+          }
+       });
+
+       // Obtain AWS credentials
+       AWS.config.credentials.get(function(){
+         const client = new AWS.CognitoSyncManager();
+         console.log(AWS.config.credentials)
+       });
+
+       res();
+    } else {
+      rej();
+    }
+  })
+}

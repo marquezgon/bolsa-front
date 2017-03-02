@@ -5,6 +5,7 @@ import { signInUser } from '../api/aws/aws_cognito';
 import { Field, reduxForm } from 'redux-form';
 import { setUser } from '../actions/index';
 import FacebookButton from './facebook_button';
+import GoogleButton from './google_button';
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -45,7 +46,7 @@ class Login extends Component {
                 <div className="row">
                   <div className="col-md-12">
                     <p><FacebookButton text="Inicia Sesión con Facebook" /></p>
-                    <p><a className="btn btn-danger btn-theme btn-block login-btn"><i className="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
+                    <p><GoogleButton text="Inicia Sesión con Google" /></p>
                     <div className="white-space-10"></div>
                     <p className="text-center"><span className="span-line">Ó</span></p>
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>

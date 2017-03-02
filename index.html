@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="google-signin-client_id" content="114519604320-28gr7mnl6hmb2et19dhrfpmij79602d3.apps.googleusercontent.com">
     <link href="/style/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/style/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/style/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link href="/style/theme.css" rel="stylesheet">
     <link href="/style/theme-custom.css" rel="stylesheet">
     <link href="/style/style.css" rel="stylesheet">
+    <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '881864981956612',
+        xfbml      : true,
+        version    : 'v2.8'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/api:client.js"></script>
   </head>
   <body>
     <div id="body-wrapper" className="wrapper"></div>
   </body>
   <script src="/bundle.js"></script>
-  <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '881864981956612',
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
 </html>
