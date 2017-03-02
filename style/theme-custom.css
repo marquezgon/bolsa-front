@@ -68,8 +68,13 @@
   text-decoration: underline;
 }
 
-.login-btn {
+.login-btn, .forgot-pass-btn, .dropdown-toggle {
   cursor: pointer;
+}
+
+.forgot-pass-btn:hover {
+  color: #3d454c;
+  opacity: .9;
 }
 
 .resend-code:hover {
