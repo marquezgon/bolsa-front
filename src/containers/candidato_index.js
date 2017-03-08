@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import ListaOfertas from '../components/lista_ofertas';
+import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
+import gql from 'graphql-tag';
 
 class CandidatoIndex extends Component {
   render() {
+    console.log(this.props.data);
     return (
       <div>
         <div className="hero-header">
@@ -56,4 +60,11 @@ class CandidatoIndex extends Component {
   }
 }
 
-export default CandidatoIndex;
+const query = gql`
+  {
+     candidatos {
+       email
+     }
+  }`;
+
+export default connect(null, null)(graphql(query)(CandidatoIndex));

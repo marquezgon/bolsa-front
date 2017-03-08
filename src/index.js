@@ -7,11 +7,16 @@ import reducers from './reducers';
 import routes from './routes';
 import promise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
+import ApolloClient, { createNetworkInterface, addTypename } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
 
 const createStoreWithMiddleware = applyMiddleware(promise, reduxThunk)(createStore);
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface('http://localhost:7777/graphql')
+})
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <ApolloProvider store={createStoreWithMiddleware(reducers)} client={client}>
     <Router history={browserHistory} routes={routes} />
-  </Provider>
+  </ApolloProvider>
   , document.querySelector('#body-wrapper'));
