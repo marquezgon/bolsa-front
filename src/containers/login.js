@@ -31,7 +31,7 @@ class Login extends Component {
     this.setState({ isLoading: true });
 		signInUser({ email, password })
       .then((userProfileObject)=>{
-			  localStorage.setItem('candidato_email', email);
+			  localStorage.setItem('bolsa_email', email);
 			  this.props.setUser(userProfileObject);
         browserHistory.push('/')})
       .catch(() => {
@@ -61,7 +61,7 @@ class Login extends Component {
                   <div className="row">
                     <div className="col-md-12">
                       <p><FacebookButton text="Inicia Sesión con Facebook" showSpinner={this.showSpinner.bind(this)} hideSpinner={this.hideSpinner.bind(this)} /></p>
-                      <p><a className="btn btn-danger btn-theme btn-block login-btn"><i className="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
+                      <p><GoogleButton text="Inicia Sesión Google" showSpinner={this.showSpinner.bind(this)} hideSpinner={this.hideSpinner.bind(this)} /></p>
                       <div className="white-space-10"></div>
                       <p className="text-center"><span className="span-line">Ó</span></p>
                       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>

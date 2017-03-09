@@ -379,9 +379,8 @@ export function registerFacebookLoginWithCognito(response){
 	    AWS.config.credentials.get(function() {
 		    const client = new AWS.CognitoSyncManager();
 		    console.log(AWS.config.credentials)
+        res();
 			});
-
-			res();
 
 	  } else {
 	    console.log('There was a problem logging you in.');
@@ -408,12 +407,14 @@ export function registerGoogleLoginWithCognito(authResult) {
        // Obtain AWS credentials
        AWS.config.credentials.get(function(){
          const client = new AWS.CognitoSyncManager();
-         console.log(AWS.config.credentials)
+         console.log(client);
+         res(client.provider._identityId);
        });
 
-       res();
     } else {
       rej();
     }
-  })
+  });
+
+	return p;
 }
