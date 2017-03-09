@@ -15,7 +15,7 @@ class FacebookButton extends Component {
         }).catch(() => {
           this.props.hideSpinner();
         })
-    }, {scope: 'public_profile,email,user_videos'})
+    }, {scope: 'public_profile,email'})
   }
 
   render() {

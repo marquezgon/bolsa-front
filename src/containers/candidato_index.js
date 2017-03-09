@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ListaOfertas from '../components/lista_ofertas';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 
 class CandidatoIndex extends Component {
   render() {
-    console.log(this.props.data);
+    console.log(this.props);
     return (
       <div>
         <div className="hero-header">
@@ -67,4 +67,11 @@ const query = gql`
      }
   }`;
 
-export default connect(null, null)(graphql(query)(CandidatoIndex));
+  const mutation = gql`
+    mutation {
+      addCandidato(email: "selena222@mex.com") {
+        email
+      }
+  }`;
+
+export default compose(graphql(query), graphql(mutation), connect(null, null))(CandidatoIndex);
