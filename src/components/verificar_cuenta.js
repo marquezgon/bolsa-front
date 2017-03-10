@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { resetVerificationPIN, verifyUserAccount } from '../api/aws/aws_cognito';
 import LoadingSpinner from './loading_spinner';
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -43,10 +45,14 @@ class Verificar extends Component {
     this.setState({ isLoading: true });
     verifyUserAccount(values)
 			.then(()=>{
-        this.setState({isLoading: false, isVerified: true});
-        setTimeout(() => {
-          browserHistory.push('/');
-        }, 2000);
+        this.props.mutate({
+          variables: { email: localStorage.candidato_email }
+        }).then(() => {
+          this.setState({isLoading: false, isVerified: true});
+          setTimeout(() => {
+            browserHistory.push('/');
+          }, 1700);
+        })
 			})
 			.catch((err)=>{
 				// if failure, display the error message and toggle the loading icon to disappear
@@ -123,14 +129,22 @@ function validate(values) {
 
 const selector = formValueSelector('Verificar') // <-- same as form name
 
-export default connect(state => {
+const mutation = gql`
+  mutation AddCandidato($email: String){
+    addCandidato(email: $email) {
+      email
+    }
+}`;
+
+//export default compose(graphql(query), graphql(mutation), connect(null, null))(CandidatoIndex);
+export default compose(graphql(mutation), connect(state => {
   // can select values individually
   const email = selector(state, 'email')
 
   return {
     email
   }
-}, null)(reduxForm({
+}, null))(reduxForm({
   form: 'Verificar',
   validate
 })(Verificar));
