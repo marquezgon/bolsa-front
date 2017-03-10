@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { registerGoogleLoginWithCognito } from '../api/aws/aws_cognito';
 import { connect } from 'react-redux';
-import { externalLogin } from '../actions/index';
+import { browserHistory } from 'react-router';
+import { setUser } from '../actions/index';
 
 class GoogleButton extends Component {
   componentDidMount() {
@@ -21,7 +23,12 @@ class GoogleButton extends Component {
         registerGoogleLoginWithCognito(googleUser).then((identity) => {
           const email = googleUser.getBasicProfile().getEmail();
           const userObj = { email, userType: 'candidato', identity, provider: 'google' };
-          thisObj.props.externalLogin(userObj);
+          axios.post(`http://localhost:7777/login`, { email, userType: userObj.userType, identity }).then(({ data }) => {
+            localStorage.setItem('bolsa_user_token', data.token);
+            localStorage.setItem('bolsa_email', email);
+            thisObj.props.setUser(userObj);
+            browserHistory.push('/');
+          })
         });
       }, function(error) {
         console.log(JSON.stringify(error, undefined, 2));
@@ -36,4 +43,4 @@ class GoogleButton extends Component {
   }
 }
 
-export default connect(null, { externalLogin })(GoogleButton);
+export default connect(null, { setUser })(GoogleButton);

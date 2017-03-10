@@ -32,6 +32,7 @@ class Login extends Component {
 		signInUser({ email, password })
       .then((userProfileObject)=>{
 			  localStorage.setItem('bolsa_email', email);
+        userProfileObject.provider = 'aws';
 			  this.props.setUser(userProfileObject);
         browserHistory.push('/')})
       .catch(() => {

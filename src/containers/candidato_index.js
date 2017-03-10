@@ -6,7 +6,6 @@ import gql from 'graphql-tag';
 
 class CandidatoIndex extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <div className="hero-header">

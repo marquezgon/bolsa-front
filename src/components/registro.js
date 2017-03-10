@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 import { signUpUser } from '../api/aws/aws_cognito';
 import LoadingSpinner from './loading_spinner';
 import FacebookButton from '../containers/facebook_button';
+import GoogleButton from '../containers/google_button';
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -40,6 +41,14 @@ class Registro extends Component {
 			})
   }
 
+  showSpinner() {
+    this.setState({ isLoading: true });
+  }
+
+  hideSpinner() {
+    this.setState({ isLoading: false });
+  }
+
   render() {
     const { handleSubmit } = this.props;
 
@@ -53,8 +62,8 @@ class Registro extends Component {
                 <div className="panel-body">
                   <div className="row">
                     <div className="col-md-12">
-                      <p><FacebookButton text="Regístrate con Facebook" /></p>
-                      <p><a href="#" className="btn btn-danger btn-theme btn-block"><i className="fa fa-google-plus pull-left bordered-right"></i> Register with Google</a></p>
+                      <p><FacebookButton text="Regístrate con Facebook" showSpinner={this.showSpinner.bind(this)} hideSpinner={this.hideSpinner.bind(this)} /></p>
+                      <p><GoogleButton text="Regístrate con Google" showSpinner={this.showSpinner.bind(this)} hideSpinner={this.hideSpinner.bind(this)} /></p>
                       <div className="white-space-10"></div>
                       <p className="text-center"><span className="span-line">Ó</span></p>
                       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>

@@ -378,8 +378,7 @@ export function registerFacebookLoginWithCognito(response){
 			// aka refreshing the credentials to use thorughout our app
 	    AWS.config.credentials.get(function() {
 		    const client = new AWS.CognitoSyncManager();
-		    console.log(AWS.config.credentials)
-        res();
+        res(client.provider._identityId);
 			});
 
 	  } else {
