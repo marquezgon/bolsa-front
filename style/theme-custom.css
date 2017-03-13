@@ -133,3 +133,8 @@
 .top-buffer{
   padding-top: 15px;
 }
+
+.no-side-padding {
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -5,7 +5,7 @@ import CandidatoIndex from './containers/candidato_index';
 import Login from './containers/login';
 import Registro from './components/registro';
 import Verificar from './components/verificar_cuenta';
-import Perfil from './containers/perfil';
+import Perfil from './components/perfil';
 
 export default (
   <Route path="/" component={App}>
