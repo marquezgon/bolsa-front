@@ -231,50 +231,50 @@ export function verifyUserAccount({email, pin}){
 // 	return p
 // }
 //
-// // if a user forgets a password, we can instantiate the password reset process (requiring an email)
-// export function forgotPassword(email){
-// 	const p = new Promise((res, rej)=>{
-// 		// we create the `userData` object to create a `cognitoUser`
-//  		const userData = {
-// 			Username: email,
-// 			Pool: userPool
-// 		}
-// 		// we must create a new `cognitoUser` instead of using `userPool` since no user is currently logged in
-// 		const cognitoUser = new CognitoUser(userData)
-//
-// 		// call the `forgotPassword()` function of `cognitoUser`
-// 		cognitoUser.forgotPassword({
-//
-// 					// we are resolving the `cognitoUser` in our promise because the React component will use it to call `cognitoUser.confirmPassword()`
-// 					// thats also why we pass in the `forgotPassword` `this` to be used in the React component
-//
-// 					// if successful, then we can resolve the promise with cognitoUser and the `this` declaration from the React component that calls `forgotPassword()`
-// 					// but we may also resolve the promise with the third function `inputVerificationCode()` which handles behind the scenes of `forgotPassword()`
-// 	        onSuccess: function (result) {
-// 	            console.log('call result: ' + result);
-// 							// res({
-// 							// 	cognitoUser: cognitoUser,
-// 							//	thirdArg: this
-// 							// })
-// 	        },
-// 					// if failure, reject the promise
-// 	        onFailure: function(err) {
-// 		        rej(err)
-// 	        },
-// 	        // Optional automatic callback that passes in `data` object from `forgotPassword()` and resolve the same was as `onSuccess`
-// 					// `inputVerificationCode()` handles behind the scenes of `forgotPassword()`, but we don't actually use it. Its here if needed in the future.
-// 	        inputVerificationCode: function(data) {
-// 	            //console.log('Code sent to: ' + data)
-// 	            res({
-// 	            	cognitoUser: cognitoUser,
-// 	            	thirdArg: this
-// 	            })
-// 	        }
-// 	    })
-// 	})
-// 	return p
-// }
-//
+// if a user forgets a password, we can instantiate the password reset process (requiring an email)
+export function forgotPassword(email){
+	const p = new Promise((res, rej)=>{
+		// we create the `userData` object to create a `cognitoUser`
+ 		const userData = {
+			Username: email,
+			Pool: userPool
+		}
+		// we must create a new `cognitoUser` instead of using `userPool` since no user is currently logged in
+		const cognitoUser = new CognitoUser(userData)
+
+		// call the `forgotPassword()` function of `cognitoUser`
+		cognitoUser.forgotPassword({
+
+					// we are resolving the `cognitoUser` in our promise because the React component will use it to call `cognitoUser.confirmPassword()`
+					// thats also why we pass in the `forgotPassword` `this` to be used in the React component
+
+					// if successful, then we can resolve the promise with cognitoUser and the `this` declaration from the React component that calls `forgotPassword()`
+					// but we may also resolve the promise with the third function `inputVerificationCode()` which handles behind the scenes of `forgotPassword()`
+	        onSuccess: function (result) {
+	            console.log('call result: ' + result);
+							// res({
+							// 	cognitoUser: cognitoUser,
+							//	thirdArg: this
+							// })
+	        },
+					// if failure, reject the promise
+	        onFailure: function(err) {
+		        rej(err)
+	        },
+	        // Optional automatic callback that passes in `data` object from `forgotPassword()` and resolve the same was as `onSuccess`
+					// `inputVerificationCode()` handles behind the scenes of `forgotPassword()`, but we don't actually use it. Its here if needed in the future.
+	        inputVerificationCode: function(data) {
+	            //console.log('Code sent to: ' + data)
+	            res({
+	            	cognitoUser: cognitoUser,
+	            	thirdArg: this
+	            })
+	        }
+	    })
+	})
+	return p
+}
+
 // reset the verification PIN for verifying a new user
 export function resetVerificationPIN(email){
 	const p = new Promise((res, rej)=>{

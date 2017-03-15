@@ -71,7 +71,7 @@ class Login extends Component {
                         <div className="form-group">
                           <div className="row">
                             <div className="col-xs-12 text-left">
-                              <p className="help-block"><a className="forgot-pass-btn">¿Olvidaste tu contraseña?</a></p>
+                              <p className="help-block"><Link to="olvide_contrasena" className="forgot-pass-btn">¿Olvidaste tu contraseña?</Link></p>
                             </div>
                           </div>
                         </div>
