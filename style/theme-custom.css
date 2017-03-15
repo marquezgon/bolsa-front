@@ -138,3 +138,13 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+.change-img-btn {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #666666;
+}
+
+.top-margin {
+  margin-top: 45px;
+}

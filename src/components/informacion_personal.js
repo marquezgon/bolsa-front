@@ -37,12 +37,15 @@ class InformacionPersonal extends Component {
     const ano = ['2016','2015','2014','2013','2012','2011','2010','2009','2008','2007','2006','2005','2004','2003','2002','2001','2000','1999','1998','1997','1996','1995','1994','1993','1992','1991','1990','1989','1988','1987','1986','1985','1984','1983','1982','1981','1980','1979','1978','1977','1976','1975','1974','1973','1972','1971','1970','1969','1968','1967','1966','1965','1964','1963','1962','1961','1960'];
     const sexo = ['Masculino', 'Femenino'];
     const nacionalidad = ['Costa Rica'];
+    const zona = ['Alajuela', 'Cartago', 'Guanacaste', 'Heredia', 'Limón', 'Puntarenas', 'San José', 'Teletrabajo', 'Extranjero'];
+    const civil = ['Soltero', 'Casado', 'Separado', 'Viudo'];
 
     return (
       <div className="col-sm-8 perfil-container">
         <h3 className="col-xs-12 text-center">Información Personal</h3>
         <div className="col-sm-2 top-buffer">
           <img className="img-responsive img-circle centered" src="/images/default-profile-photo.png" alt="" />
+          <button className="btn btn-default change-img-btn">Cambiar</button>
         </div>
         <div className="col-sm-10 top-buffer">
           <div className="row">
@@ -73,10 +76,19 @@ class InformacionPersonal extends Component {
               <Field name="nacionalidad" component={renderSelect} options={nacionalidad} label="Nacionalidad" />
             </div>
             <div className="col-xs-6">
-              <Field name="direccion" component={renderInput} type="text" label="Dirección" placeholder="Ingresa tu dirección" />
+              <Field name="direccion" component={renderInput} type="text" label="Localidad de Residencia" placeholder="Localidad" />
             </div>
             <div className="col-xs-6">
-              <Field name="ciudad" component={renderSelect} options={sexo} label="Ciudad" />
+              <Field name="ciudad" component={renderSelect} options={zona} label="Zona de Residencia" />
+            </div>
+            <div className="col-xs-6 col-sm-4">
+              <Field name="civil" component={renderSelect} options={civil} label="Estado Civil" />
+            </div>
+            <div className="col-xs-6 col-sm-4">
+              <Field name="phone" component={renderInput} type="text" label="Teléfono 1" placeholder="" />
+            </div>
+            <div className="col-xs-6 col-sm-4">
+              <Field name="secondary_phone" component={renderInput} type="text" label="Teléfono 2" placeholder="" />
             </div>
           </div>
         </div>
