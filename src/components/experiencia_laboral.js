@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { dias, meses, ano } from '../helpers/helper.js';
+
+const renderTextarea = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
+  return (
+    <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
+        <label>{label}</label>
+        <div>
+            <textarea {...input} className="form-control" rows="3" placeholder={placeholder}></textarea>
+            {touched && ((error && <div className="text-danger">{error}</div>))}
+        </div>
+    </div>
+  )
+}
 
 const renderInput = ({ input, label, type, placeholder, meta: { touched, error, warning } }) => {
   return (
@@ -46,10 +59,38 @@ class ExperienciaLaboral extends Component {
               <Field name="giro" component={renderSelect} options={giro} label="Giro de la Empresa" />
             </div>
             <div className="col-xs-6">
-              <Field name="puesto" component={renderInput} type="text" label="Empresa" placeholder="Puesto dentro de la empresa" />
+              <Field name="puesto" component={renderInput} type="text" label="Puesto" placeholder="Puesto dentro de la empresa" />
             </div>
             <div className="col-xs-6">
-              <Field name="giro" component={renderSelect} options={giro} label="Giro de la Empresa" />
+              <Field name="salario" component={renderInput} type="text" label="Salario" placeholder="Ingresa tu salario" />
+            </div>
+            <div className="col-xs-12">
+              <Field name="puesto" component={renderTextarea} label="Puesto" placeholder="Describe tus logros, actividades realizadas, y las tecnologías que usaste" />
+            </div>
+            <div className="col-xs-6">
+              <label className="col-xs-12 no-side-padding">Fecha de Inicio</label>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="diasInicio" component={renderSelect} options={dias} />
+              </div>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="mesesInicio" component={renderSelect} options={meses} />
+              </div>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="anoInicio" component={renderSelect} options={ano} />
+              </div>
+            </div>
+            <div className="col-xs-6">
+              <label className="col-xs-12 no-side-padding">Fecha de Término</label>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="diasTermino" component={renderSelect} options={dias} />
+              </div>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="mesesTermino" component={renderSelect} options={meses} />
+              </div>
+              <div className="col-xs-4 no-side-padding">
+                <Field name="anoTermino" component={renderSelect} options={ano} />
+              </div>
+              <p class="checkbox-inline"><input type="checkbox" value="" />&nbsp;&nbsp;Actualmente</p>
             </div>
           </div>
         </div>
