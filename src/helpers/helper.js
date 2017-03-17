@@ -5,3 +5,4 @@ export const sexo = ['Masculino', 'Femenino'];
 export const nacionalidad = ['Costa Rica'];
 export const zona = ['Alajuela', 'Cartago', 'Guanacaste', 'Heredia', 'Limón', 'Puntarenas', 'San José', 'Teletrabajo', 'Extranjero'];
 export const civil = ['Soltero', 'Casado', 'Separado', 'Viudo'];
+export const giro = ['Selecciona un giro de la empresa', 'Agricultura / Pesca / Ganadería', 'Construcción / Obras', 'Educación', 'Energía', 'Entretenimiento / Deportes', 'Fabricación', 'Finanzas / Banca', 'Gobierno / No Lucro', 'Hostelería / Turismo', 'Informática / Hardware', 'Informática / Software', 'Internet', 'Legal / Asesoría', 'Materias Primas', 'Medios de Comunicación', 'Publicidad / RRPP', 'RRHH / Personal', 'Salud / Medicina', 'Servicios Profesionales', 'Telecomunicaciones', 'Transporte', 'Venta al Consumidor', 'Venta al por mayor', 'Otro'];

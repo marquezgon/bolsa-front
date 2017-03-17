@@ -12,7 +12,9 @@ import { ApolloProvider } from 'react-apollo';
 
 const createStoreWithMiddleware = applyMiddleware(promise, reduxThunk)(createStore);
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface('http://localhost:7777/graphql')
+  networkInterface: createNetworkInterface({
+    uri: 'http://localhost:7777/graphql' 
+  })
 })
 
 ReactDOM.render(

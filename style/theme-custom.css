@@ -148,3 +148,20 @@
 .top-margin {
   margin-top: 45px;
 }
+
+.panel-heading a {
+  cursor: pointer;
+}
+
+.panel-heading a:hover {
+  color: white;
+}
+
+.panel-primary {
+  border-color: #2a3f54;
+}
+
+.panel-primary > .panel-heading {
+  background-color: #2a3f54;
+  border-color: #2a3f54;
+}
