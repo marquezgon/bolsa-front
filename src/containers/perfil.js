@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InformacionPersonal from '../components/informacion_personal';
 import ExperienciaLaboral from '../components/experiencia_laboral';
+import Educacion from '../components/educacion';
+import Idiomas from '../components/idiomas';
 
 class Perfil extends Component {
   render() {
@@ -19,7 +21,21 @@ class Perfil extends Component {
             <ExperienciaLaboral />
             <div className="col-sm-1 top-margin"></div>
             <div className="col-sm-3 perfil-container top-margin">
-              something goes there
+              additional info goes here
+            </div>
+          </div>
+          <div>
+            <Educacion />
+            <div className="col-sm-1 top-margin"></div>
+            <div className="col-sm-3 perfil-container top-margin">
+              something else goes here
+            </div>
+          </div>
+          <div>
+            <Idiomas />
+            <div className="col-sm-1 top-margin"></div>
+            <div className="col-sm-3 perfil-container top-margin">
+              something else goes here
             </div>
           </div>
         </div>

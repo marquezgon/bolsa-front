@@ -139,6 +139,14 @@
   padding-right: 0;
 }
 
+.no-right-side-padding {
+  padding-right: 0;
+}
+
+.no-left-side-padding {
+  padding-left: 0;
+}
+
 .change-img-btn {
   margin-top: 10px;
   font-size: 13px;
