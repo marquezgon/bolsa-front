@@ -173,3 +173,7 @@
   background-color: #2a3f54;
   border-color: #2a3f54;
 }
+
+.save-btn-padding {
+  padding-top: 15px;
+}

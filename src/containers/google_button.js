@@ -24,6 +24,7 @@ class GoogleButton extends Component {
           const email = googleUser.getBasicProfile().getEmail();
           const userObj = { email, userType: 'candidato', identity, provider: 'google' };
           axios.post(`http://localhost:7777/login`, { email, userType: userObj.userType, identity }).then(({ data }) => {
+            console.log(data);
             localStorage.setItem('bolsa_user_token', data.token);
             localStorage.setItem('bolsa_email', email);
             thisObj.props.setUser(userObj);
