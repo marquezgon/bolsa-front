@@ -26,6 +26,7 @@ export default function(ComposedComponent){
 		// componentWillMount() renders on server before sending out to client
 		// whereas componentDidMount() renders on client
 		componentWillMount(){
+			console.log(this.props);
 			if(!this.props.authenticated){
 				browserHistory.push('/login')
 			}
@@ -50,7 +51,7 @@ export default function(ComposedComponent){
 
 	function mapStateToProps(state){
 		return {
-			authenticated: state.user.authenticated
+			authenticated: state.user
 		}
 	}
 

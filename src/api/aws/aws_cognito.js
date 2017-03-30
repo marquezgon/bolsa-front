@@ -300,62 +300,62 @@ export function resetVerificationPIN(email){
 	return p
 }
 
-// // for automatic signin of a user (so they don't have to login each time)
-// export function retrieveUserFromLocalStorage(){
-// 	const p = new Promise((res, rej)=>{
-// 			// grab the `cognitoUser` object from `userPool`
-// 			// this is possible without login because we had already logged in before (whereas verifyPIN and resetPassword have not)
-// 	    const cognitoUser = userPool.getCurrentUser();
-// 	    console.log("Getting cognitoUser from local storage...")
-// 	    if (cognitoUser != null) {
-// 					// get the latest session from `cognitoUser`
-// 	        cognitoUser.getSession(function(err, session) {
-// 							// if failed to get session, reject the promise
-// 	            if (err) {
-// 	                rej(err);
-// 									return;
-// 	            }
-// 							// check that the session is valid
-// 	            console.log('session validity: ' + session.isValid());
-// 	            console.log(session);
-// 							// save to localStorage the jwtToken from the `session`
-// 	            localStorage.setItem('user_token', session.getAccessToken().getJwtToken());
-// 	            // Edge case, AWS Cognito does not allow for the Logins attr to be dynamically generated. So we must create the loginsObj beforehand
-// 	            const loginsObj = {
-// 	                // our loginsObj will just use the jwtToken to verify our user
-// 	                [USERPOOL_ID] : session.getIdToken().getJwtToken()
-// 	            }
-// 							// create a new `CognitoIdentityCredentials` object to set our credentials
-// 							// we are logging into a AWS federated identity pool
-// 			    		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-// 	                IdentityPoolId : IDENTITY_POOL_ID, // your identity pool id here
-// 	                Logins : loginsObj
-// 	            })
-// 							// refresh the credentials so we can use it in our app
-// 	            AWS.config.credentials.refresh(function(){
-// 	            	console.log(AWS.config.credentials)
-// 								// resolve the promise by again building the user object to be used in our React-Redux app
-// 	            	res(buildUserObject(cognitoUser))
-// 	            })
-// 	        });
-// 	    }else{
-// 				// if failure, reject the promise
-// 	    	rej('Failed to retrieve user from localStorage')
-// 	    }
-// 	})
-// 	return p
-// }
-//
-// // signout the current user
-// export function signOutUser(){
-// 	const p = new Promise((res, rej)=>{
-// 		// since the user is already logged in, we can instantiate `cognitoUser` with `userPool`
-// 		const cognitoUser = userPool.getCurrentUser()
-// 		cognitoUser.signOut()
-// 	})
-// 	return p
-// }
-//
+// for automatic signin of a user (so they don't have to login each time)
+export function retrieveUserFromLocalStorage(){
+	const p = new Promise((res, rej)=>{
+			// grab the `cognitoUser` object from `userPool`
+			// this is possible without login because we had already logged in before (whereas verifyPIN and resetPassword have not)
+	    const cognitoUser = userPool.getCurrentUser();
+			console.log(cognitoUser);
+	    if (cognitoUser != null) {
+					// get the latest session from `cognitoUser`
+	        cognitoUser.getSession(function(err, session) {
+							// if failed to get session, reject the promise
+	            if (err) {
+	                rej(err);
+									return;
+	            }
+							// check that the session is valid
+	            console.log('session validity: ' + session.isValid());
+	            console.log(session);
+							// save to localStorage the jwtToken from the `session`
+	            localStorage.setItem('bolsa_user_token', session.getAccessToken().getJwtToken());
+	            // Each case, AWS Cognito does not allow for the Logins attr to be dynamically generated. So we must create the loginsObj beforehand
+	            const loginsObj = {
+	                // our loginsObj will just use the jwtToken to verify our user
+	                [USERPOOL_ID] : session.getIdToken().getJwtToken()
+	            }
+							// create a new `CognitoIdentityCredentials` object to set our credentials
+							// we are logging into a AWS federated identity pool
+			    		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+	                IdentityPoolId : IDENTITY_POOL_ID, // your identity pool id here
+	                Logins : loginsObj
+	            })
+							// refresh the credentials so we can use it in our app
+	            AWS.config.credentials.refresh(function(){
+	            	console.log(AWS.config.credentials)
+								// resolve the promise by again building the user object to be used in our React-Redux app
+	            	res(buildUserObject(cognitoUser))
+	            })
+	        });
+	    }else{
+				// if failure, reject the promise
+	    	rej('Failed to retrieve user from localStorage')
+	    }
+	})
+	return p
+}
+
+// signout the current user
+export function signOutUser(){
+	const p = new Promise((res, rej)=>{
+		// since the user is already logged in, we can instantiate `cognitoUser` with `userPool`
+		const cognitoUser = userPool.getCurrentUser()
+		if(cognitoUser) cognitoUser.signOut();
+	})
+	return p
+}
+
 // login to cognito using Facebook instead of an AWS email/password login flow
 // requires first logging in with Facebook and passing in the result of the login function to `registerFacebookLoginWithCognito()`
 export function registerFacebookLoginWithCognito(response){
@@ -411,7 +411,7 @@ export function registerGoogleLoginWithCognito(authResult) {
        });
 
     } else {
-      rej();
+      rej(false);
     }
   });
 

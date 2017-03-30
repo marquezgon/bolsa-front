@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import NavLink from './nav_link';
 import { connect } from 'react-redux';
+import { signOutUser } from '../api/aws/aws_cognito';
+import { logoutUser } from '../actions/index';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
+import Navbar from 'react-bootstrap/lib/Navbar';
+import Nav from 'react-bootstrap/lib/Nav';
 
 class Header extends Component {
   constructor(props) {
@@ -9,8 +15,16 @@ class Header extends Component {
 
     this.state = { showDropdown: false };
   }
+
   toggleDropdown() {
     this.setState({ showDropdown: !this.state.showDropdown });
+  }
+
+  logout() {
+    signOutUser();
+    this.props.logoutUser();
+    delete localStorage.bolsa_user_token;
+    browserHistory.push('/');
   }
 
   render() {
@@ -24,16 +38,14 @@ class Header extends Component {
               <NavLink to="/empresa"><strong>Empresa</strong></NavLink>
             </ul>
             {this.props.authenticated ?
-              <ul className="nav navbar-nav navbar-right">
-                <li className={`dropdown ${this.state.showDropdown ? 'open' : ''}`}>
-                  <a onClick={this.toggleDropdown.bind(this)} className="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Cerrar Sesión</a></li>
-                  </ul>
-                </li>
-              </ul> :
+
+                <Nav bsClass="nav navbar-nav navbar-right">
+                  <NavDropdown eventKey={3} title="Dropdown" id="menu-nav">
+                    <MenuItem eventKey={3.1} href="/perfil">Mi Perfil</MenuItem>
+                    <MenuItem divider />
+                    <MenuItem eventKey={3.2} onClick={this.logout.bind(this)}>Cerrar Sesión</MenuItem>
+                  </NavDropdown>
+                </Nav> :
               <ul className="nav navbar-nav navbar-right">
                 <li className="link-btn"><Link to="/login"><span className="btn btn-theme btn-pill btn-xs btn-line">Iniciar Sesión</span></Link></li>
                 <li className="link-btn"><Link to="registro"><span className="btn btn-theme  btn-pill btn-xs btn-line">Registrarse</span></Link></li>
@@ -52,4 +64,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, { logoutUser })(Header);

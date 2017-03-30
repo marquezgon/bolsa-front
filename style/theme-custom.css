@@ -157,7 +157,7 @@
   margin-top: 45px;
 }
 
-.panel-heading a {
+.panel-heading a, .logout-ul li, .logout-ul a {
   cursor: pointer;
 }
 
