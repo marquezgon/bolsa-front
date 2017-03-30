@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import NavLink from './nav_link';
 import { connect } from 'react-redux';
+import { retrieveUserFromLocalStorage } from '../api/aws/aws_cognito';
+import axios from 'axios';
 import { signOutUser } from '../api/aws/aws_cognito';
-import { logoutUser } from '../actions/index';
+import { logoutUser, setUser } from '../actions/index';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -18,6 +20,22 @@ class Header extends Component {
 
   toggleDropdown() {
     this.setState({ showDropdown: !this.state.showDropdown });
+  }
+
+  componentWillMount(){
+    if(localStorage.bolsa_user_token) {
+      retrieveUserFromLocalStorage()
+        .then((data) => {
+          console.log(data);
+        }).catch(() => {
+          axios.get('http://localhost:7777/checkSocialSession', { headers: { 'Authorization': `Bearer ${localStorage.bolsa_user_token}` } })
+            .then((user) => {
+              const { userType, email, identity } = user.data;
+              this.props.setUser({ userType, email, identity });
+            });
+        })
+      //checkSession()
+    }
   }
 
   logout() {
@@ -64,4 +82,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { logoutUser })(Header);
+export default connect(mapStateToProps, { logoutUser, setUser })(Header);

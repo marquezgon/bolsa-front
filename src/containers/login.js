@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { signInUser, retrieveUserFromLocalStorage } from '../api/aws/aws_cognito';
+import { signInUser } from '../api/aws/aws_cognito';
 import { Field, reduxForm } from 'redux-form';
 import { setUser } from '../actions/index';
 import LoadingSpinner from '../components/loading_spinner';
@@ -25,16 +25,6 @@ class Login extends Component {
     super(props);
 
     this.state = { isLoading: false };
-  }
-
-  componentWillMount(){
-    if(localStorage.bolsa_user_token) {
-      retrieveUserFromLocalStorage()
-        .then((data) => {
-          console.log(data);
-        })
-      //checkSession()
-    }
   }
 
   onSubmit({ email, password }) {
