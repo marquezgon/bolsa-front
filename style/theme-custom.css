@@ -1,3 +1,11 @@
+html, body {
+  height: 100%;
+}
+
+.main-footer {
+  padding: 21px 0;
+}
+
 .has-danger .form-control{
   border-color:#d9534f
 }
@@ -176,4 +184,16 @@
 
 .save-btn-padding {
   padding-top: 15px;
+}
+
+.loading-page-container, #body-wrapper {
+  background: #394e63;
+  height: 100%;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
 }

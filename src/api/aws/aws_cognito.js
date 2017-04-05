@@ -306,7 +306,6 @@ export function retrieveUserFromLocalStorage(){
 			// grab the `cognitoUser` object from `userPool`
 			// this is possible without login because we had already logged in before (whereas verifyPIN and resetPassword have not)
 	    const cognitoUser = userPool.getCurrentUser();
-			console.log(cognitoUser);
 	    if (cognitoUser != null) {
 					// get the latest session from `cognitoUser`
 	        cognitoUser.getSession(function(err, session) {
